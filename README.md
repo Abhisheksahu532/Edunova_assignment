@@ -1,73 +1,84 @@
-Edunova is a full-stack web application built using Node.js and Express.js as the backend, with MongoDB as the database. This app handles book rentals and user management, including tracking transactions of book issues and returns.
+# Library Management System
 
-Features
-Manage users and books.
-Issue and return books with transaction tracking.
-API-based structure for easy interaction.
-Authentication using JWT tokens.
-Book search by name, category, and rent price.
-Calculate rent based on book return time.
-Tech Stack
-Node.js with Express.js
-MongoDB for the database
-Mongoose for MongoDB interaction
-JWT for authentication
-Express-validator for data validation
-bcryptjs for password hashing
-Installation
-To run this project locally, follow the steps below:
+## Overview
 
-Prerequisites
-Node.js (v14.x or later)
-MongoDB installed and running (either locally or on services like MongoDB Atlas)
-Setup
-Clone the repository:
+This Library Management System is a Node.js application using MongoDB as the database. The project is designed to manage books, users, and transactions efficiently. The system includes several APIs to interact with the backend, and it has been deployed for remote testing.
 
-bash
-Copy code
-git clone https://github.com/Abhisheksahu532/edunova.git
-cd edunova
-Install dependencies:
+## Technologies Used
 
-bash
-Copy code
-npm install
-Set up environment variables by creating a .env file in the root directory with the following variables:
+- **Node.js**: Runtime environment for executing JavaScript code server-side.
+- **Express**: Web application framework for Node.js.
+- **MongoDB**: NoSQL database used for storing data.
+- **Postman**: Tool for API testing (for testing API endpoints).
+- **Render**: Deployment platform.
 
-bash
-Copy code
-MONGODB_URI=your_mongodb_uri
-JWT_SECRET=your_jwt_secret
-PORT=3000
-Seed the database (optional):
+## API Endpoints
 
-bash
-Copy code
-npm run seed
-Start the server:
+### **User Endpoints** (Protected)
 
-bash
-Copy code
-npm start
-Or in development mode:
+- **`POST /api/auth/register`** - Register a new user
+- **Input:**
+  ```json
+  {
+    "name": "John Doe",
+    "email": "EMAIL",
+    "password": "password123"
+  }
+  ```
 
-bash
-Copy code
-npm run dev
-The server should now be running on http://localhost:5000.
 
-API Endpoints
-User Endpoints
-POST /api/users/register - Register a new user
-POST /api/users/login - User login (JWT token authentication)
-GET /api/users - Get a list of all users            
-Book Endpoints
-GET /api/books - Get a list of all books
-GET /api/books/search?name=[book_name]&category=[category]&minRent=[min_rent]&maxRent=[max_rent] - Search books by name, category, and rent
-GET /api/books/rent-range?min=[min_rent]&max=[max_rent] - Search books by rent range
-Transaction Endpoints
-POST /api/transactions/issue - Issue a book to a user (requires book name, user, and issue date)
-POST /api/transactions/return - Return a book (requires book name, user, and return date)
-GET /api/transactions/book?name=[book_name] - Get transactions for a specific book
-GET /api/transactions/user?userId=[user_id] - Get transactions for a specific user
-GET /api/transactions/date-range?start=[start_date]&end=[end_date] - Get transactions in a date range
+
+### **Book Endpoints**
+
+- **`GET /api/books`** - Get a list of all books  
+- **Output:** List of all books with details.
+
+- **`GET /api/books/search?name=[book_name]&category=[category]&minRent=[min_rent]&maxRent=[max_rent]`** - Search books by name, category, and rent price.  
+- **Output:** List of matching books based on query parameters.
+
+- **`GET /api/books/rent-range?min=[min_rent]&max=[max_rent]`** - Get books within a specific rent range.  
+- **Output:** List of books with rent per day within the range.
+
+### **Transaction Endpoints** (Protected)
+
+- **`POST /api/transactions/issue`** - Issue a book to a user  
+- **Requires Authentication**: Include the JWT token in the request headers.
+- **Input:** 
+  ```json
+  {
+    "bookName": "Book Title",
+    "userId": "user_id",
+    "issueDate": "YYYY-MM-DD"
+  }
+  ```
+- **Output:** 
+  ```json
+  {
+    "message": "Book issued successfully"
+  }
+  ```
+
+- **`POST /api/transactions/return`** - Return a book and calculate rent  
+- **Requires Authentication**: Include the JWT token in the request headers.
+- **Input:** 
+  ```json
+  {
+    "bookName": "Book Title",
+    "userId": "user_id",
+    "returnDate": "YYYY-MM-DD"
+  }
+  ```
+- **Output:** Rent is calculated, and the transaction is updated.
+
+
+## Helper APIs
+
+- **`GET /api/books`** - Get all books.
+
+## Deployment
+
+1. Push your code to a GitHub repository.
+2. Create a new Web Service on Render, connected to your GitHub repository.
+3. Set up environment variables (MONGODB_URI, JWT_SECRET) in Render's Environment settings.
+4. Deploy the service.
+5. You can monitor logs and check for successful deployment.
