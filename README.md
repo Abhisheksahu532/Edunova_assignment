@@ -25,7 +25,7 @@ Clone the repository:
 
 bash
 Copy code
-git clone https://github.com/yourusername/edunova.git
+git clone https://github.com/Abhisheksahu532/edunova.git
 cd edunova
 Install dependencies:
 
@@ -38,7 +38,7 @@ bash
 Copy code
 MONGODB_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
-PORT=5000
+PORT=3000
 Seed the database (optional):
 
 bash
