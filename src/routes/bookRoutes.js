@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { searchBooks, searchByRentRange, advancedSearch } = require('../controllers/bookController');
-const { protect } = require('../middleware/authMiddleware');
+const { getAllBooks, searchBooks, searchByRentRange, advancedSearch } = require('../controllers/bookController');
 
-
-router.get('/search', protect, searchBooks);
-router.get('/rent', protect, searchByRentRange);
-router.get('/filter', protect, advancedSearch);
+router.get('/', getAllBooks);
+router.get('/search', searchBooks);
+router.get('/rent', searchByRentRange);
+router.get('/filter', advancedSearch);
 
 module.exports = router;
